@@ -48,9 +48,24 @@ class Timeline:
 	#constructor
 	def __init__(self,arrayOfEvents = []):
 		self.timeline  = arrayOfEvents
+	# fix and Sort Timelime
+	def fix(self):
+		## DE MOMENTO LOS EVENTOS NO PUEDEN TENER OVERLAPPING
+		for ev in self.timeline:
+			if ev.bhour <= 12*60:
+				ev.bhour += 24*60
+			if ev.ehour <= 12*60:
+				ev.ehour += 24*60
+		self.timeline.sort(key = lambda event : event.bhour)
+		OVERLAPPING = False
+		for  i in range(0,len(self.timeline)-1):
+			if self.timeline[i].ehour > self.timeline[i+1].bhour:
+				OVERLAPPING = True
+		assert not OVERLAPPING
 	#anadir evento
 	def addEvent(self,event):
 		self.timeline.append(event)
+		self.fix()
 	#genera un diccionario para exportar a json
 	def toDict(self):
 		dicti  = {}
@@ -83,10 +98,12 @@ def validate(hora):
 
 ### TEST
 def test():
-	carLucas = Event("Carrete Lucas","20:30","00:00","Santa Julia")
-	bella  = Event("Carrete en Bella","00:30","03:30","Pio Nono")
+	carLucas = Event("Carrete Lucas","20:30","23:00","Santa Julia")
+	bella  = Event("Carrete en Bella","23:30","03:30","Pio Nono")
 	bella.changeLoc("harvard")
 	t1 = Timeline([carLucas,bella])
+	after = Event("After","05:30","08:50","Donde la Sonia")
+	t1.addEvent(after)
 	print(Jsontimeline(t1))
 
 
