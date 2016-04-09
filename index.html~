@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Weveo</title> 
+	</head>
+	<body>
+		<script src="js/fb_sdk.js"></script>
+		<p>Weveo</p>
+		<div
+  			class="fb-like"
+  			data-share="true"
+  			data-width="450"
+  			data-show-faces="true">
+		</div>
+		<p>Login with Facebook</p>
+	</body>
+</html>
