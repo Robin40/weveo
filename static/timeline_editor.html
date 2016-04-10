@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Timeline Editor</title>
+		<script src="https://dl.dropboxusercontent.com/u/37550073/timeline_gui.js"></script>
+    	<script src="https://dl.dropboxusercontent.com/u/37550073/timeline_creator.js"></script>
+	</head>
+	<body onload="timelinePreview_update()" background="https://dl.dropboxusercontent.com/u/37550073/gsbg.jpg">
+		<center>
+			<br><br><br><br><br><br><br>
+			<h1>Timeline Editor</h1>
+			<p><strong>Timeline Preview</strong></p>
+			<div id="timelinePreview"></div>
+			<p><strong>Event Editor</strong></p>
+			<form method="post" action="add_event">
+				<table>
+					<tr><td>Event Name</td><td><input type="text" name="name"></td></tr>
+					<tr><td>Begin Hour</td><td><input type="text" name="bhour"></td></tr>
+					<tr><td>End Hour</td><td><input type="text" name="ehour"></td></tr>
+					<tr><td>Location</td><td><input type="text" name="location"></td></tr>
+				</table>
+				<input type="submit" value="Add event">
+			</form>
+		</center>
+	</body>
+</html>
