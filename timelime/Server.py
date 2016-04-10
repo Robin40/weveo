@@ -1,13 +1,16 @@
 ### Generador de visualizaciones ###
+import django
+
 
 class Event:
 	#Constructor
-	def __init__(self,name = "",bhour = "", ehour = "", location = ""):
+	def __init__(self,name = "",bhour = "", ehour = "", location = "",directions = ""):
 		self.bhour = validate(bhour)
 		self.ehour = validate(ehour)
 		self.name = name
 		self.location = location
 		self.array = [name,location,bhour,ehour]
+		self.directions = directions
 	#Cambia la ubicacion de un evento
 	def changeLoc(self,newlocation):
 		self.location = newlocation
@@ -35,6 +38,7 @@ class Event:
 		dic["location"]  = self.location
 		dic["bhour"] = self.bhour
 		dic["ehour"]  = self.ehour
+		dic["directions"] = self.directions
 		return dic
 
 class Jsontimeline:
@@ -74,7 +78,7 @@ class Timeline:
 		return dicti
 	#generar mensaje	
 	def generateMessage(self):
-		return str(jsontimeline(self.timeline))
+		return str(Jsontimeline(self.timeline))
 	#enviar mensaje
 	def sendMessage(self):
 		pass
@@ -96,13 +100,76 @@ def validate(hora):
 	else:
 		assert False
 
+
+
+
+def getJsonIndications(origin,destination):
+	from urllib.request import urlopen
+	ur = "https://maps.googleapis.com/maps/api/directions/json?origin=" +origin + "&destination=" + destination + "&key=AIzaSyC-U1o8Bq6pcHB7m-0MW1zLZMYSNdi2rtc"
+	uopen = urlopen(ur)
+	return uopen.read().decode('utf-8')
+
+def getJsonNearestClubs():
+	pass
+
+def getJsonNearestBars(origin):
+	from urllib.request import urlopen
+	ur = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location="+origin +"&radius=3000&types=drink&key=AIzaSyCKy16yHB8azZKd0RcPyAeWu0YZAvOYPfg"
+	print(ur)
+	uopen = urlopen(ur)
+	return uopen.read().decode('utf-8')
+
+def getGoogleDirection(street,number):
+	street = street.replace(" ","+")
+	st = street+ "+" + str(number) + ",+Region+Metropolitana"
+	return st
+
+def getGoTo(dir1,dir2):
+	 return "https://www.google.es/maps/dir/" + dir1 + "/" + dir2 + "/@-33.4444689,-70.6913193,13z/"
+
+def getGoogleLatLong(direction):
+	from urllib.request import urlopen
+	ur = "https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyCKy16yHB8azZKd0RcPyAeWu0YZAvOYPfg"
+	uopen = urlopen(ur)
+	return uopen.read().decode('utf-8')
+
+def testDirections():
+	googleDicBer = getGoogleDirection("Genova",2016)
+	googleDicRob = getGoogleDirection("Los Gladiolos",4850)
+	print(getGoTo(googleDicBer,googleDicRob))
+	#print(getJsonIndications(googleDicBer,googleDicRob))
+	#print(getGoogleLatLong(googleDicBer))
+	#print(getJsonNearestBars(googleDicBer))
+
+#testDirections()
+def jsonFromPk(pk):
+	wev = Weveos.object.get(id = pk)
+	evsInWev = IsInWeveo.object.filter(weveo = wev)
+	T = Timeline()
+	for ed in evsInWev:
+		evv = ed.ev
+		name = evv.name
+		bh = evv.bhour
+		eh = evv.ehour
+		loc = evv.location
+		e  = Event(name,bh,eh,loc)
+		T.addEvent(e)
+	return Jsontimeline(T)
+
+
+
 ### TEST
 def test():
-	carLucas = Event("Carrete Lucas","20:30","23:00","Santa Julia")
-	bella  = Event("Carrete en Bella","23:30","03:30","Pio Nono")
+	googleDicBer = getGoogleDirection("Genova",2016)
+	googleDicRob = getGoogleDirection("Los Gladiolos",4850)
+	googleDicLuc = getGoogleDirection("Santa Julia",640)
+	googleDicBella = getGoogleDirection("Pio Nono",148)
+	googleDicAfter = getGoogleDirection("Bombero nuez",159)
+	carLucas = Event("Carrete Lucas","20:30","23:00","Santa Julia",getGoTo(googleDicBer,googleDicLuc))
+	bella  = Event("Carrete en Bella","23:30","03:30","Pio Nono",getGoTo(googleDicLuc,googleDicBella))
 	bella.changeLoc("harvard")
 	t1 = Timeline([carLucas,bella])
-	after = Event("After","05:30","08:50","Donde la Sonia")
+	after = Event("After","05:30","08:50","After en" ,getGoTo(googleDicBella,googleDicAfter))
 	t1.addEvent(after)
 	print(Jsontimeline(t1))
 
