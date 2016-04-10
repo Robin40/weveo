@@ -11,6 +11,6 @@ function timelinePreview_update() {
 }
 
 function add_event(ev) {
-	userTimeline.push(ev);
+	userTimeline.events.push(ev);
 	timelinePreview_update();
 }

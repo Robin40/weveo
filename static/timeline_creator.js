@@ -1,4 +1,4 @@
-window.userTimeline = emptyTimelineJSON;
+window.userTimeline = testTimelineJSON;//emptyTimelineJSON;
 function timelinePreview_update() {
 	var div = document.getElementById('timelinePreview');
 	if (!div.hasChildNodes()) {
