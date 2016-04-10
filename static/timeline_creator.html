@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Timeline Creator</title>
+		<script src="timeline_gui.js"></script>
+		<script src="timeline_creator.js"></script>
+	</head>
+	<body onload="timelinePreview_update()">
+		<h1>Timeline Creator</h1>
+		<p><strong>Timeline Preview</strong></p>
+		<div id="timelinePreview"></div>
+		<p><strong>Event Creator</strong></p>
+		<form method="post" action="add_event">
+			Event Name<input type="text" name="name"><br>
+			Begin Hour<input type="text" name="bhour"><br>
+			End Hour<input type="text" name="ehour"><br>
+			Location<input type="text" name="location"><br>
+			<input type="submit" value="Add event">
+		</form>
+	</body>
+</html>

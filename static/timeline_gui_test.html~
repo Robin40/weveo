@@ -4,7 +4,7 @@
 		<title>Timeline GUI Test</title>
 		<script src="timeline_gui.js"></script>
 	</head>
-	<body onload="document.getElementById('timelines').appendChild(timeline_div(testTimelineJSON)); document.body.appendChild(red_rectangle_div());">
+	<body onload="push_timeline(testTimelineJSON); ">
 		<p>Timeline GUI Test</p>
 		<div id="timelines">
 			<p>Timelines</p>
