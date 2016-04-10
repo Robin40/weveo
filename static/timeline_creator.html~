@@ -5,7 +5,7 @@
 		<script src="timeline_gui.js"></script>
 		<script src="timeline_creator.js"></script>
 	</head>
-	<body onload="timelinePreview_update()" background="gsbg.jpg">
+	<body onload="timelinePreview_update()" background="https://dl.dropboxusercontent.com/u/37550073/gsbg.jpg">
 		<center>
 			<br><br><br><br><br><br><br>
 			<h1>Timeline Creator</h1>
@@ -13,10 +13,12 @@
 			<div id="timelinePreview"></div>
 			<p><strong>Event Creator</strong></p>
 			<form method="post" action="add_event">
-				Event Name<input type="text" name="name"><br>
-				Begin Hour<input type="text" name="bhour"><br>
-				End Hour<input type="text" name="ehour"><br>
-				Location<input type="text" name="location"><br>
+				<table>
+					<tr><td>Event Name</td><td><input type="text" name="name"></td></tr>
+					<tr><td>Begin Hour</td><td><input type="text" name="bhour"></td></tr>
+					<tr><td>End Hour</td><td><input type="text" name="ehour"></td></tr>
+					<tr><td>Location</td><td><input type="text" name="location"></td></tr>
+				</table>
 				<input type="submit" value="Add event">
 			</form>
 		</center>
